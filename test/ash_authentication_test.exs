@@ -43,6 +43,7 @@ defmodule AshAuthenticationTest do
                Example.UserWithAuditLog,
                Example.UserWithConfirmationFieldPolicy,
                Example.UserWithEmptyIncludes,
+               Example.UserWithEtsApiKey,
                Example.UserWithExcludedActions,
                Example.UserWithExcludedStrategies,
                Example.UserWithExplicitIncludes,

@@ -8,6 +8,7 @@ defmodule Example do
 
   resources do
     resource Example.ApiKey
+    resource Example.EtsApiKey
     resource Example.AuditLog
     resource Example.Token
     resource Example.TokenWithCustomCreateTimestamp
@@ -17,6 +18,7 @@ defmodule Example do
     resource Example.UserWithAuditLog
     resource Example.UserWithConfirmationFieldPolicy
     resource Example.UserWithEmptyIncludes
+    resource Example.UserWithEtsApiKey
     resource Example.UserWithExcludedActions
     resource Example.UserWithExcludedStrategies
     resource Example.UserWithExplicitIncludes
