@@ -27,7 +27,7 @@ defmodule AshAuthentication.Strategy.ApiKey.SignInPreparation do
       |> Ash.Query.before_action(fn query ->
         api_key_relationship.destination
         |> Ash.Query.do_filter(api_key_relationship.filter)
-        |> Ash.Query.filter(id == ^api_key_id)
+        |> Ash.Query.filter(id == ^stored_id(api_key_relationship.destination, api_key_id))
         |> maybe_load_tenant(strategy.multitenancy_relationship)
         |> Query.set_context(%{private: %{ash_authentication?: true}})
         |> Ash.read_one()
@@ -144,6 +144,17 @@ defmodule AshAuthentication.Strategy.ApiKey.SignInPreparation do
     else
       _ ->
         :error
+    end
+  end
+
+  # The key carries its id as 16 raw bytes. Cast as the id attribute casts it, the id
+  # matches the stored one in data layers that compare values as given, such as ETS.
+  defp stored_id(api_key_resource, api_key_id) do
+    attribute = Ash.Resource.Info.attribute(api_key_resource, :id)
+
+    case Ash.Type.cast_input(attribute.type, api_key_id, attribute.constraints) do
+      {:ok, id} -> id
+      _ -> api_key_id
     end
   end
 
